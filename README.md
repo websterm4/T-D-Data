@@ -39,7 +39,11 @@ def Tdata(len(data)):
 x = data[0][0]+' '+data[0][1]+' '+data[0][2]
 return ' '.join(x.format(year,doy) for x in range(data))
 
+b = []
+b.append((year,doy))
+a = b +' '+data[0][3]+' '+data[0][4]
 
+#Can only concatenate list (not str or np)
 
 
 
