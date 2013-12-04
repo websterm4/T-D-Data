@@ -23,16 +23,21 @@ file = 'files/data/delNorteT.dat'
 fp = open(file, 'r')
 tdata = fp.readlines()
 fp.close()
- #chop off the header lines
 required_data = tdata[3290:-1096] 
 data = np.loadtxt(required_data,usecols=(0,1,2,3,4),unpack=True,dtype=str) #shape(5,730)
 data = data.T
+#Tdata_2009 = data[:-365].T
+#Tdata_2010 = data[365:].T
 x = data[0][0]+' '+data[0][1]+' '+data[0][2]
 ds = np.array(x.split(' ')).astype(int) #want up to the 4th element
 #time of year converted into format (year,day in julian days)
 year,doy = datetime.datetime(ds[0],ds[1],ds[2]).strftime('%Y %j').split() #convert to year, day of year
 #needs looping for all days of the year
 
+
+def Tdata(len(data)):
+x = data[0][0]+' '+data[0][1]+' '+data[0][2]
+return ' '.join(x.format(year,doy) for x in range(data))
 
 
 
