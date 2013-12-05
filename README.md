@@ -17,17 +17,17 @@ import pylab as plt
 
 
 
-#Temperature Data
+#Temperature Data 
+
 import datetime
 file = 'files/data/delNorteT.dat'
 fp = open(file, 'r')
 tdata = fp.readlines()
 fp.close()
+ #chop off the header lines
 required_data = tdata[3290:-1096] 
 data = np.loadtxt(required_data,usecols=(0,1,2,3,4),unpack=True,dtype=str) #shape(5,730)
 data = data.T
-#Tdata_2009 = data[:-365].T
-#Tdata_2010 = data[365:].T
 x = data[0][0]+' '+data[0][1]+' '+data[0][2]
 ds = np.array(x.split(' ')).astype(int) #want up to the 4th element
 #time of year converted into format (year,day in julian days)
@@ -35,21 +35,28 @@ year,doy = datetime.datetime(ds[0],ds[1],ds[2]).strftime('%Y %j').split() #conve
 #needs looping for all days of the year
 
 
-def Tdata(len(data)):
-x = data[0][0]+' '+data[0][1]+' '+data[0][2]
-return ' '.join(x.format(year,doy) for x in range(data))
+def read_Tdata():
+result = []
+x = data[i][0]+' '+data[i][1]+' '+data[i][2]
+return ' '.join(x.format(year,doy) for x in range(data[0]))
+result.append(x
 
 b = []
 b.append((year,doy))
 a = b +' '+data[0][3]+' '+data[0][4]
 
 #Can only concatenate list (not str or np)
+#.format for strings only
+#len(data[first dimension
+for i in arange(len(data[0:])):
+    x = data[i][0]+' '+data[i][1]+' '+data[i][2]
+    ds = np.array(x.split(' ')).astype(int)
+    year,doy = datetime.datetime(ds[0],ds[1],ds[2]).strftime('%Y %j').split()
+    Tdata = ' '.join(x.format(year,doy) for x in range(len(data[:,0])))
+    return Tdata
 
 
-
-for line_data in required_data: #loop over each line
-    day_data = line_data.split() #strings split on the white space
-    data.append(day_data)
+b = ' '.join([data[0][0],data[0][1],data[0][2]])
 
 
 
@@ -66,12 +73,17 @@ x = ds[year
 
 #Discharge Data
 file = 'files/data/delnorte.dat'
-data = np.loadtxt(file,usecols=(2,3),unpack=True,dtype=str)
+fp = open(file, 'r')
+data = fp.readlines()
+required_data = data[3314:4044] #max lines in doc = 4045, first 35 are header lines
+data = np.loadtxt(required_data,usecols=(2,3),unpack=True,dtype=str)
 plt.plot(data[1].astype(float))
+data.readlines()
 import datetime
 ds = np.array(data[0][0].split('-')).astype(int)
 year,doy = datetime.datetime(ds[0],ds[1],ds[2]).strftime('%Y %j').split()
 #All of the above code taken directly from the course notes
 #values needed are the last 730 values
-array needed = (2,365)
+#values from 3323-4018 (add 35 on to first value to account for header lines)
+
 
