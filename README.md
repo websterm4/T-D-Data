@@ -25,38 +25,48 @@ fp = open(file, 'r')
 tdata = fp.readlines()
 fp.close()
  #chop off the header lines
-required_data = tdata[3290:-1096] 
-data = np.loadtxt(required_data,usecols=(0,1,2,3,4),unpack=True,dtype=str) #shape(5,730)
-data = data.T
-x = data[0][0]+' '+data[0][1]+' '+data[0][2]
-ds = np.array(x.split(' ')).astype(int) #want up to the 4th element
-#time of year converted into format (year,day in julian days)
-year,doy = datetime.datetime(ds[0],ds[1],ds[2]).strftime('%Y %j').split() #convert to year, day of year
-#needs looping for all days of the year
+required_data2009 = tdata[3290:3655] 
+required_data2010 = tdata[3655:-1096]
+data_2009 = np.loadtxt(required_data2009,usecols=(0,1,2,3,4),unpack=True,dtype=str) #shape(5,363)
+data_2010 = np.loadtxt(required_data2010,usecols=(0,1,2,3,4),unpack=True,dtype=str) #shape(5,365)
+data_2009 = data_2009.T
+data_2010 = data_2010.T
+data_2009 = data_2009.astype(int)
+data_2010 = data_2010.astype(int)
 
+days = xrange(365)
+year_2009 = np.empty(len(days))
+doy_2009 = np.empty(len(days))
+for i in days:
+    year[i],doy[i] = datetime.datetime(data_2009[i][0],data_2009[i][1],data_2009[i][2]).strftime('%Y %j').split()
+a = []
+a.append(year)
+a.append(doy)
+a.append(data_2009[3])
+a.append(data_2009[4])
+a = np.array(a)
+a = a.astype(int)
+print a
 
-def read_Tdata():
-result = []
-x = data[i][0]+' '+data[i][1]+' '+data[i][2]
-return ' '.join(x.format(year,doy) for x in range(data[0]))
-result.append(x
-
+days10 = xrange(365)
+year_2010 = np.empty(len(days))
+doy_2010 = np.empty(len(days))
+for i in days:
+    year[i],doy[i] = datetime.datetime(data_2010[i][0],data_2010[i][1],data_2010[i][2]).strftime('%Y %j').split()
 b = []
-b.append((year,doy))
-a = b +' '+data[0][3]+' '+data[0][4]
+b.append(year)
+b.append(doy)
+b.append(data_2010[3])
+b.append(data_2010[4])
+b = np.array(b)
+b = b.astype(int)
+print b
+
+
 
 #Can only concatenate list (not str or np)
 #.format for strings only
 #len(data[first dimension
-for i in arange(len(data[0:])):
-    x = data[i][0]+' '+data[i][1]+' '+data[i][2]
-    ds = np.array(x.split(' ')).astype(int)
-    year,doy = datetime.datetime(ds[0],ds[1],ds[2]).strftime('%Y %j').split()
-    Tdata = ' '.join(x.format(year,doy) for x in range(len(data[:,0])))
-    return Tdata
-
-
-b = ' '.join([data[0][0],data[0][1],data[0][2]])
 
 
 
@@ -68,7 +78,6 @@ truncate bottom 1096 lines and top 3288 lines (exc. header lines)
 array with 3 dimensions: 1 (year), 2(doy), 3(mediant)
 append each data dimension to an individual column
 
-x = ds[year
 
 
 #Discharge Data
@@ -85,5 +94,7 @@ year,doy = datetime.datetime(ds[0],ds[1],ds[2]).strftime('%Y %j').split()
 #All of the above code taken directly from the course notes
 #values needed are the last 730 values
 #values from 3323-4018 (add 35 on to first value to account for header lines)
+
+
 
 
