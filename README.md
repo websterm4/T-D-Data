@@ -27,7 +27,7 @@ fp.close()
  #chop off the header lines
 required_data2009 = tdata[3290:3655] 
 required_data2010 = tdata[3655:-1096]
-data_2009 = np.loadtxt(required_data2009,usecols=(0,1,2,3,4),unpack=True,dtype=str) #shape(5,363)
+data_2009 = np.loadtxt(required_data2009,usecols=(0,1,2,3,4),unpack=True,dtype=str) #shape(5,365)
 data_2010 = np.loadtxt(required_data2010,usecols=(0,1,2,3,4),unpack=True,dtype=str) #shape(5,365)
 data_2009 = data_2009.T
 data_2010 = data_2010.T
@@ -48,7 +48,7 @@ a = np.array(a)
 a = a.astype(int)
 print a
 
-days10 = xrange(365)
+days = xrange(365)
 year_2010 = np.empty(len(days))
 doy_2010 = np.empty(len(days))
 for i in days:
@@ -56,10 +56,11 @@ for i in days:
 b = []
 b.append(year)
 b.append(doy)
-b.append(data_2010[3])
-b.append(data_2010[4])
+for i in xrange(len(days)):
+    b.append(data_2010[i][3])
+    b.append(data_2010[i][4])
 b = np.array(b)
-b = b.astype(int)
+b = b.astype(int) # picked up a sequence in the array
 print b
 
 
